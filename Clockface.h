@@ -10,13 +10,14 @@
 #include <Object.h>
 #include <ImageUtils.h>
 
-#include "../common/IClockface.h"
-
 #include "hour8pt7b.h"
 #include "minute7pt7b.h"
 #include "small4pt7b.h"
 #include "DateI18nPT.h"
-#include "../common/Icons.h"
+
+// Commons
+#include "IClockface.h"
+#include "Icons.h"
 
 
 class Clockface: public IClockface {

@@ -1,5 +1,9 @@
 #include <Arduino.h>
-#include <gfxfont.h>
+#ifdef ARDUINO_ESP32_DEV
+  #include <gfxfont.h>
+#else
+  #include <M5Stack.h>
+#endif
 
 const uint8_t minute7pt7bBitmaps[] PROGMEM = {
   0x00, 0x49, 0x24, 0x85, 0x40, 0x55, 0xA0, 0x48, 0x93, 0xFA, 0x44, 0x9F, 
