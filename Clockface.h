@@ -3,9 +3,8 @@
 
 #include <Arduino.h>
 
-#include <Display.h>
+#include <Display.hpp>
 #include <Tile.h>
-#include <Locator.h>
 #include <Game.h>
 #include <Object.h>
 #include <ImageUtils.h>
@@ -22,16 +21,13 @@
 
 class Clockface: public IClockface {
   private:
-    Display* _display;
-    DateTime* _dateTime;
     void timeInWords(int h, int m, char* hWords, char* mWords);
     void updateTime();
     void updateDate();
     void updateTemperature();
 
   public:
-    Clockface(Display* display);
-    void setup(DateTime *dateTime);
+    void setup();
     void update();
 };
 

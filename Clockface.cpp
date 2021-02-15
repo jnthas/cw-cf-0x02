@@ -3,8 +3,6 @@
 
 const char* FORMAT_TWO_DIGITS = "%02d";
 
-EventBus eventBus;
-
 unsigned long lastMillis = 0;
 
 char hInWords[20];
@@ -15,17 +13,9 @@ int temperature = 26;
 
 DateI18nPT i18n;
 
-Clockface::Clockface(Display* display) {
-  _display = display;
-
-  Locator::provide(display);
-  Locator::provide(&eventBus);
-}
-
-void Clockface::setup(DateTime *dateTime) {
-  this->_dateTime = dateTime;
-  Locator::getDisplay()->setTextWrap(true, true);
-  Locator::getDisplay()->fillRect(0, 0, 64, 64, 0x0000);  
+void Clockface::setup() {
+  Display::setTextWrap(true, true);
+  Display::fillRect(0, 0, Display::WIDTH, Display::HEIGHT, 0x0000);  
 
   updateTime();
   updateDate();
@@ -37,15 +27,15 @@ void Clockface::update()
 {  
   if (millis() - lastMillis >= 1000) {
 
-    if (_dateTime->getSecond() == 0) {
+    if (DateTime::getSecond() == 0) {
       updateTime();
     }
 
-    if (_dateTime->getMinute() == 0 && _dateTime->getSecond() == 0) {
+    if (DateTime::getMinute() == 0 && DateTime::getSecond() == 0) {
       updateDate();    
     }
 
-    if (_dateTime->getMinute() % 15 == 0 && _dateTime->getSecond() == 0) {
+    if (DateTime::getMinute() % 15 == 0 && DateTime::getSecond() == 0) {
       updateTemperature();
     }
     
@@ -55,55 +45,55 @@ void Clockface::update()
 
 void Clockface::updateTime() {
 
-  Locator::getDisplay()->fillRect(0, 0, 64, 40, 0x0000);  
+  Display::fillRect(0, 0, 64, 40, 0x0000);  
 
-  i18n.timeInWords(_dateTime->getHour(), _dateTime->getMinute(), hInWords, mInWords);  
+  i18n.timeInWords(DateTime::getHour(), DateTime::getMinute(), hInWords, mInWords);  
   //timeInWords(5, 6, hInWords, mInWords);  
 
   // Hour
-  Locator::getDisplay()->setFont(&hour8pt7b);  
-  Locator::getDisplay()->setCursor(1, 14);
-  Locator::getDisplay()->setTextColor(0x2589);
-  Locator::getDisplay()->println(hInWords);
+  Display::setFont(&hour8pt7b);  
+  Display::setCursor(1, 14);
+  Display::setTextColor(0x2589);
+  Display::println(hInWords);
   
   // Minute
-  Locator::getDisplay()->setFont(&minute7pt7b);
-  Locator::getDisplay()->setCursor(0, 25);
-  Locator::getDisplay()->setTextColor(0xffff);
-  Locator::getDisplay()->println(mInWords);
+  Display::setFont(&minute7pt7b);
+  Display::setCursor(0, 25);
+  Display::setTextColor(0xffff);
+  Display::println(mInWords);
 
   // Separator line
-  Locator::getDisplay()->drawHLine(1, 40, 62, 0xffff);
+  Display::drawHLine(1, 40, 62, 0xffff);
 }
 
 
 void Clockface::updateDate() {  
-  Locator::getDisplay()->fillRect(0, 41, 46, 13, 0x0000);
+  Display::fillRect(0, 41, 46, 13, 0x0000);
 
   // Date
-  Locator::getDisplay()->setFont(&minute7pt7b);
-  Locator::getDisplay()->setCursor(0, 52);
-  Locator::getDisplay()->setTextColor(0x2589);
+  Display::setFont(&minute7pt7b);
+  Display::setCursor(0, 52);
+  Display::setTextColor(0x2589);
     
-  const char* fmt = i18n.formatDate(_dateTime->getDay(), _dateTime->getMonth());
+  const char* fmt = i18n.formatDate(DateTime::getDay(), DateTime::getMonth());
 
-  Locator::getDisplay()->print(fmt);
+  Display::print(fmt);
 
-  const int dateWidth = Locator::getDisplay()->getTextWidth(fmt);
+  const int dateWidth = Display::getTextWidth(fmt);
 
   // Weekday
-  Locator::getDisplay()->setFont(&small4pt7b);
-  //Locator::getDisplay()->setFont(&minute7pt7b);
-  Locator::getDisplay()->setCursor(dateWidth + 2, 52);
-  Locator::getDisplay()->setTextColor(0xffff);
-  Locator::getDisplay()->println(i18n.weekDayName(_dateTime->getWeekday()));  
+  Display::setFont(&small4pt7b);
+  //Display::setFont(&minute7pt7b);
+  Display::setCursor(dateWidth + 2, 52);
+  Display::setTextColor(0xffff);
+  Display::println(i18n.weekDayName(DateTime::getWeekday()));  
 }
 
 
 void Clockface::updateTemperature() {
 
-  Locator::getDisplay()->fillRect(46, 41, 18, 13, 0x0000);
-  Locator::getDisplay()->setFont(&minute7pt7b);
+  Display::fillRect(46, 41, 18, 13, 0x0000);
+  Display::setFont(&minute7pt7b);
 
   // Temperature
   // TODO get temperature
@@ -113,14 +103,14 @@ void Clockface::updateTemperature() {
   char buffer[4];  
   sprintf(buffer, "%d~", temperature);
    
-  const int tempWidth = Locator::getDisplay()->getTextWidth(buffer);
+  const int tempWidth = Display::getTextWidth(buffer);
  
-  Locator::getDisplay()->setCursor(62-tempWidth, 52);
-  Locator::getDisplay()->setTextColor(0xffff);
-  Locator::getDisplay()->println(buffer);
+  Display::setCursor(62-tempWidth, 52);
+  Display::setTextColor(0xffff);
+  Display::println(buffer);
 
 
-  Locator::getDisplay()->draw(WIFI, 1, 55, 8, 8);
-  Locator::getDisplay()->draw(MAIL, 12, 55, 8, 8);
-  Locator::getDisplay()->draw(WEATHER_CLOUDY_SUN, 55, 55, 8, 8);
+  Display::draw(WIFI, 1, 55, 8, 8);
+  Display::draw(MAIL, 12, 55, 8, 8);
+  Display::draw(WEATHER_CLOUDY_SUN, 55, 55, 8, 8);
 }
