@@ -5,13 +5,12 @@
 
 #include <Display.hpp>
 #include <Tile.h>
-#include <Game.h>
 #include <Object.h>
 #include <ImageUtils.h>
 
 #include "hour8pt7b.h"
 #include "minute7pt7b.h"
-#include "small4pt7b.h"
+#include <fonts/small4pt7b.h>
 #include "DateI18nPT.h"
 
 // Commons
