@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include <Display.h>
+#include <Adafruit_GFX.h>
 #include <Tile.h>
 #include <Locator.h>
 #include <Game.h>
@@ -22,7 +22,7 @@
 
 class Clockface: public IClockface {
   private:
-    Display* _display;
+    Adafruit_GFX* _display;
     DateTime* _dateTime;
     void timeInWords(int h, int m, char* hWords, char* mWords);
     void updateTime();
@@ -30,7 +30,7 @@ class Clockface: public IClockface {
     void updateTemperature();
 
   public:
-    Clockface(Display* display);
+    Clockface(Adafruit_GFX* display);
     void setup(DateTime *dateTime);
     void update();
 };

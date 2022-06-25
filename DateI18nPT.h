@@ -1,10 +1,8 @@
 #ifndef IDateI18nPT_h
 #define IDateI18nPT_h
 
-
 #include <Arduino.h>
 #include "IDateI18n.h"
-
 
 class DateI18nPT: public IDateI18n 
 {
@@ -33,21 +31,21 @@ class DateI18nPT: public IDateI18n
       }
 
       char hours[][13] = { 
-                          "zero", "uma", "duas", "tres", "quatro", 
-                          "cinco", "seis", "sete", "oito", "nove", 
-                          "dez", "onze", "doze"
-                        }; 
+        "zero", "uma", "duas", "tres", "quatro", 
+        "cinco", "seis", "sete", "oito", "nove", 
+        "dez", "onze", "doze"
+      }; 
 
       char min_dec[][10] = {
-                            "zero", "dez", "vinte", "trinta", "quarenta", "cinquenta"
-                          };
+        "zero", "dez", "vinte", "trinta", "quarenta", "cinquenta"
+      };
       
       char min_uni[][19] = { 
-                            "zero", "um", "dois", "tres", "quatro", "cinco", 
-                            "seis", "sete", "oito", "nove", "dez", 
-                            "onze", "doze", "treze", "quatorze", "quinze", 
-                            "dezesseis", "dezessete", "dezoito", "dezenove"
-                          };
+        "zero", "um", "dois", "tres", "quatro", "cinco", 
+        "seis", "sete", "oito", "nove", "dez", 
+        "onze", "doze", "treze", "quatorze", "quinze", 
+        "dezesseis", "dezessete", "dezoito", "dezenove"
+      };
           
 
       if (h == 0 && m == 0) {
