@@ -56,7 +56,6 @@ void Clockface::update()
 
 void Clockface::updateTime() 
 {
-
   Locator::getDisplay()->fillRect(0, 0, 64, 40, 0x0000);  
 
   i18n.timeInWords(_dateTime->getHour(), _dateTime->getMinute(), hInWords, mInWords);  
@@ -105,7 +104,7 @@ void Clockface::updateDate()
   //Locator::getDisplay()->setFont(&minute7pt7b);
   Locator::getDisplay()->setCursor(dateWidth + 2, 52);
   Locator::getDisplay()->setTextColor(0xffff);
-  Locator::getDisplay()->println(i18n.weekDayName(_dateTime->getWeekday()-1));  
+  Locator::getDisplay()->println(i18n.weekDayName(_dateTime->getWeekday()));  
 }
 
 void Clockface::updateTemperature() 
