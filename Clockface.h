@@ -1,5 +1,4 @@
-#ifndef WordsClockFace_h
-#define WordsClockFace_h
+#pragma once
 
 #include <Arduino.h>
 
@@ -9,11 +8,12 @@
 #include <Game.h>
 #include <Object.h>
 #include <ImageUtils.h>
+#include <WiFi.h>
 
 #include "hour8pt7b.h"
 #include "minute7pt7b.h"
 #include "small4pt7b.h"
-#include "DateI18nPT.h"
+#include "DateI18nEN.h"
 
 // Commons
 #include "IClockface.h"
@@ -23,7 +23,7 @@
 class Clockface: public IClockface {
   private:
     Adafruit_GFX* _display;
-    DateTime* _dateTime;
+    CWDateTime* _dateTime;
     void timeInWords(int h, int m, char* hWords, char* mWords);
     void updateTime();
     void updateDate();
@@ -31,8 +31,6 @@ class Clockface: public IClockface {
 
   public:
     Clockface(Adafruit_GFX* display);
-    void setup(DateTime *dateTime);
+    void setup(CWDateTime *dateTime);
     void update();
 };
-
-#endif

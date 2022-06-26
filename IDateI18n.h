@@ -1,5 +1,4 @@
-#ifndef IDateI18n_h
-#define IDateI18n_h
+#pragma once
 
 #include <Arduino.h>
 
@@ -9,5 +8,3 @@ class IDateI18n {
     virtual const char* weekDayName(int weekday);
     virtual void timeInWords(int h, int m, char* hWords, char* mWords);
 };
-
-#endif

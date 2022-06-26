@@ -13,7 +13,7 @@ char formattedDate[20];
 
 int temperature = 26;
 
-DateI18nPT i18n;
+DateI18nEN i18n;
 
 Clockface::Clockface(Adafruit_GFX* display)
 {
@@ -23,14 +23,14 @@ Clockface::Clockface(Adafruit_GFX* display)
   Locator::provide(&eventBus);
 }
 
-void Clockface::setup(DateTime *dateTime) {
+void Clockface::setup(CWDateTime *dateTime) {
   this->_dateTime = dateTime;
   Locator::getDisplay()->setTextWrap(true);
   Locator::getDisplay()->fillRect(0, 0, 64, 64, 0x0000);  
 
   updateTime();
   updateDate();
-  updateTemperature();
+  //updateTemperature();
 }
 
 
@@ -46,9 +46,9 @@ void Clockface::update()
       updateDate();    
     }
 
-    if (_dateTime->getMinute() % 15 == 0 && _dateTime->getSecond() == 0) {
-      updateTemperature();
-    }
+    // if (_dateTime->getMinute() % 15 == 0 && _dateTime->getSecond() == 0) {
+    //   updateTemperature();
+    // }
     
     lastMillis = millis();
   }  
@@ -60,8 +60,7 @@ void Clockface::updateTime()
   Locator::getDisplay()->fillRect(0, 0, 64, 40, 0x0000);  
 
   i18n.timeInWords(_dateTime->getHour(), _dateTime->getMinute(), hInWords, mInWords);  
-  //timeInWords(5, 6, hInWords, mInWords);  
-
+  
   // Hour
   Locator::getDisplay()->setFont(&hour8pt7b);  
   Locator::getDisplay()->setCursor(1, 14);
@@ -76,6 +75,12 @@ void Clockface::updateTime()
 
   // Separator line
   Locator::getDisplay()->drawFastHLine(1, 40, 62, 0xffff);
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Locator::getDisplay()->drawRGBBitmap(1, 55, WIFI, 8, 8);
+  } else {
+    Locator::getDisplay()->fillRect(1, 55, 8, 8, 0x0000);
+  }
 }
 
 void Clockface::updateDate() 
@@ -100,7 +105,7 @@ void Clockface::updateDate()
   //Locator::getDisplay()->setFont(&minute7pt7b);
   Locator::getDisplay()->setCursor(dateWidth + 2, 52);
   Locator::getDisplay()->setTextColor(0xffff);
-  Locator::getDisplay()->println(i18n.weekDayName(_dateTime->getWeekday()));  
+  Locator::getDisplay()->println(i18n.weekDayName(_dateTime->getWeekday()-1));  
 }
 
 void Clockface::updateTemperature() 
@@ -124,9 +129,7 @@ void Clockface::updateTemperature()
   Locator::getDisplay()->setCursor(62-tempWidth, 52);
   Locator::getDisplay()->setTextColor(0xffff);
   Locator::getDisplay()->println(buffer);
-
   
-  Locator::getDisplay()->drawRGBBitmap(1, 55, WIFI, 8, 8);
   Locator::getDisplay()->drawRGBBitmap(12, 55, MAIL, 8, 8);
   Locator::getDisplay()->drawRGBBitmap(55, 55, WEATHER_CLOUDY_SUN, 8, 8);
 }

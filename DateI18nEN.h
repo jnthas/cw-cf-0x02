@@ -1,5 +1,4 @@
-#ifndef IDateI18nEN_h
-#define IDateI18nEN_h
+#pragma once
 
 #include <Arduino.h>
 #include "IDateI18n.h"
@@ -84,5 +83,3 @@ class DateI18nEN: public IDateI18n
       }
     }
 };
-
-#endif
